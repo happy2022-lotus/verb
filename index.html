@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>영어 불규칙 동사 3단 변화 마스터</title>
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-md shadow-indigo-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">불규칙 동사 3단 변화 트레이너</h1>
+          <p class="text-xs text-indigo-600 font-semibold">반복 학습으로 완벽하게 마스터하는 AI 오답 관리 도구</p>
+        </div>
+      </div>
+      <div id="top-score-badge" class="bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-full text-xs font-bold text-indigo-700 flex items-center gap-1.5">
+        <span>⭐ 전체 학습 진행률:</span>
+        <span id="mastery-percent">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col gap-6">
+
+    <!-- 1단계: 설정 화면 -->
+    <section id="setup-view" class="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-xl shadow-slate-100 flex flex-col gap-8">
+      <div class="text-center max-w-xl mx-auto">
+        <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">Start Your Learning</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-3 mb-2 leading-tight">동사 변화 학습을 시작해볼까요?</h2>
+        <p class="text-slate-500 text-sm md:text-base">어려운 단어는 알아서 분석하고 반복해 주는 맞춤형 스마트 오답 관리 알고리즘이 적용됩니다.</p>
+      </div>
+
+      <!-- 옵션 영역 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- 1. 범위 선택 (동사 변화 형식 기반) -->
+        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+          <h3 class="font-bold text-slate-900 mb-1 flex items-center gap-2">
+            <span class="text-indigo-600 font-extrabold">01.</span> 동사 변화 패턴 선택
+          </h3>
+          <p class="text-xs text-slate-400 mb-3">암기하기 쉬운 규칙 패턴별로 집중 학습을 진행합니다.</p>
+          <div class="grid grid-cols-1 gap-2" id="range-buttons">
+            <button onclick="setRange('all')" id="btn-range-all" class="range-btn py-2 px-3 rounded-xl border-2 text-sm font-semibold text-left transition-all bg-white border-indigo-600 text-indigo-700 shadow-sm flex justify-between items-center">
+              <span>전체 패턴 (87개 단어)</span>
+              <span class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-0.5 rounded-full" id="count-all">0</span>
+            </button>
+            <button onclick="setRange('AAA')" id="btn-range-AAA" class="range-btn py-2 px-3 rounded-xl border-2 border-slate-200 text-slate-600 text-sm font-semibold text-left transition-all bg-white hover:border-indigo-200 flex justify-between items-center">
+              <div>
+                <span>A-A-A 패턴</span>
+                <span class="text-[10px] text-slate-400 font-normal block">원형 = 과거 = 과거분사</span>
+              </div>
+              <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-0.5 rounded-full" id="count-AAA">0</span>
+            </button>
+            <button onclick="setRange('ABA')" id="btn-range-ABA" class="range-btn py-2 px-3 rounded-xl border-2 border-slate-200 text-slate-600 text-sm font-semibold text-left transition-all bg-white hover:border-indigo-200 flex justify-between items-center">
+              <div>
+                <span>A-B-A 패턴</span>
+                <span class="text-[10px] text-slate-400 font-normal block">원형 = 과거분사</span>
+              </div>
+              <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-0.5 rounded-full" id="count-ABA">0</span>
+            </button>
+            <button onclick="setRange('ABB')" id="btn-range-ABB" class="range-btn py-2 px-3 rounded-xl border-2 border-slate-200 text-slate-600 text-sm font-semibold text-left transition-all bg-white hover:border-indigo-200 flex justify-between items-center">
+              <div>
+                <span>A-B-B 패턴</span>
+                <span class="text-[10px] text-slate-400 font-normal block">과거 = 과거분사</span>
+              </div>
+              <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-0.5 rounded-full" id="count-ABB">0</span>
+            </button>
+            <button onclick="setRange('ABC')" id="btn-range-ABC" class="range-btn py-2 px-3 rounded-xl border-2 border-slate-200 text-slate-600 text-sm font-semibold text-left transition-all bg-white hover:border-indigo-200 flex justify-between items-center">
+              <div>
+                <span>A-B-C 패턴</span>
+                <span class="text-[10px] text-slate-400 font-normal block">모두 다른 변화</span>
+              </div>
+              <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-0.5 rounded-full" id="count-ABC">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. 학습 모드 선택 -->
+        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+              <span class="text-indigo-600 font-extrabold">02.</span> 출제 모드 선택
+            </h3>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="setMode('choice')" id="btn-mode-choice" class="mode-btn py-2.5 px-3 rounded-xl border-2 text-sm font-semibold text-center transition-all bg-white border-indigo-600 text-indigo-700 shadow-sm">
+                사지선다 객관식
+              </button>
+              <button onclick="setMode('write')" id="btn-mode-write" class="mode-btn py-2.5 px-3 rounded-xl border-2 border-slate-200 text-slate-600 text-sm font-semibold text-center transition-all bg-white hover:border-indigo-200">
+                직접 쓰는 주관식
+              </button>
+            </div>
+          </div>
+          <div class="mt-4">
+            <h4 class="text-xs font-bold text-slate-500 mb-2">⭐ 이번 세션 학습 설정:</h4>
+            <div class="bg-white p-3 rounded-xl border border-slate-100 text-xs text-slate-500 flex flex-col gap-1.5">
+              <div class="flex justify-between"><span class="font-medium">선택된 패턴:</span> <span id="summary-pattern" class="font-bold text-indigo-600">전체 패턴</span></div>
+              <div class="flex justify-between"><span class="font-medium">해당 단어 수:</span> <span id="summary-count" class="font-bold text-indigo-600">87개</span></div>
+              <div class="flex justify-between"><span class="font-medium">최대 문항 수:</span> <span class="font-bold text-slate-700">15문항 제한 (오답 우선 출제)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 시작 버튼 -->
+      <button onclick="startSession()" class="w-full bg-indigo-600 hover:bg-indigo-700 active:transform active:scale-[0.99] transition-all text-white font-bold py-4 rounded-2xl shadow-xl shadow-indigo-100 flex items-center justify-center gap-2 text-lg">
+        학습 시작하기
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </section>
+
+    <!-- 2단계: 퀴즈 화면 -->
+    <section id="quiz-view" class="hidden flex flex-col gap-6">
+      
+      <!-- 진행바 & 오답 알림 -->
+      <div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-md flex items-center justify-between gap-4">
+        <div class="flex-grow">
+          <div class="flex justify-between items-center mb-1 text-xs font-semibold text-slate-400">
+            <span>남은 문항: <strong id="remaining-count" class="text-indigo-600">0</strong>개</span>
+            <span id="streak-info" class="text-orange-500 font-bold hidden">🔥 <span id="streak-count">0</span> 연속 정답!</span>
+          </div>
+          <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+            <div id="progress-bar-fill" class="bg-indigo-600 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+        <button onclick="exitQuiz()" class="text-slate-400 hover:text-rose-500 text-xs font-semibold flex items-center gap-1 border border-slate-200 hover:border-rose-100 hover:bg-rose-50 px-3 py-2 rounded-xl transition-all">
+          그만하기
+        </button>
+      </div>
+
+      <!-- 퀴즈 카드 -->
+      <div class="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-xl shadow-slate-100 flex flex-col gap-6 relative overflow-hidden">
+        
+        <!-- 오답 반복 태그 (단어가 가중치가 높을 때 등장) -->
+        <div id="repeat-badge" class="absolute top-4 right-4 bg-rose-50 border border-rose-100 text-rose-600 text-xs font-extrabold px-3 py-1 rounded-full hidden flex items-center gap-1.5 animate-pulse">
+          ⚠️ 완벽 암기 도전중 (자주 틀리는 단어)
+        </div>
+
+        <!-- 질문 영역 -->
+        <div class="text-center py-4">
+          <div class="flex items-center justify-center gap-2">
+            <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2.5 py-1 rounded-md" id="verb-number-label">No. 01</span>
+            <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-md" id="verb-pattern-label">A-B-C형</span>
+          </div>
+          <h3 class="text-4xl font-extrabold text-slate-900 mt-3 mb-2" id="verb-root">hide</h3>
+          <p class="text-slate-400 font-medium text-lg" id="verb-meaning">(숨다)</p>
+        </div>
+
+        <div class="bg-indigo-50/50 rounded-2xl p-4 text-center border border-indigo-50 text-indigo-950 font-bold mb-2 text-sm md:text-base">
+          👉 과거형 (Past) 과 과거분사형 (Past Participle)을 입력해 주세요!
+        </div>
+
+        <!-- A: 객관식 레이아웃 -->
+        <div id="choices-container" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- 버튼들이 자바로 채워짐 -->
+        </div>
+
+        <!-- B: 주관식 레이아웃 -->
+        <div id="write-container" class="hidden flex flex-col gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">1. 과거형 (Past)</label>
+              <input type="text" id="input-past" autocomplete="off" class="w-full text-center font-bold text-lg border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none rounded-xl py-3 px-4 transition-all lowercase placeholder-slate-300" placeholder="과거형 입력">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">2. 과거분사형 (Past Participle)</label>
+              <input type="text" id="input-pp" autocomplete="off" class="w-full text-center font-bold text-lg border-2 border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none rounded-xl py-3 px-4 transition-all lowercase placeholder-slate-300" placeholder="과거분사형 입력">
+            </div>
+          </div>
+          <button id="btn-submit-write" onclick="checkWriteAnswer()" class="w-full mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2">
+            제출하고 채점하기
+          </button>
+        </div>
+
+        <!-- 피드백 피치 영역 (정답/오답 애니메이션 반응) -->
+        <div id="feedback-panel" class="hidden rounded-2xl p-4 flex items-start gap-3 transition-all duration-200 border">
+          <div id="feedback-icon" class="text-2xl mt-0.5"></div>
+          <div class="flex-grow">
+            <h4 id="feedback-title" class="font-extrabold text-sm">정답입니다!</h4>
+            <p id="feedback-detail" class="text-xs mt-1 text-slate-500">훌륭합니다. 연속 기록을 달성하는 중입니다.</p>
+          </div>
+          <button id="btn-next" onclick="loadNextQuestion()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-1">
+            다음 단어
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3단계: 결과 리포트 화면 -->
+    <section id="result-view" class="hidden bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-xl shadow-slate-100 flex flex-col gap-6">
+      <div class="text-center py-4">
+        <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">Learning Complete</span>
+        <h2 class="text-3xl font-extrabold text-slate-900 mt-3 mb-2">🎉 완주를 축하합니다!</h2>
+        <p class="text-slate-500 text-sm">이번 라운드 학습 분석 리포트입니다.</p>
+      </div>
+
+      <!-- 핵심 통계 요약 카드 -->
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-indigo-50/50 border border-indigo-50 p-4 rounded-2xl text-center">
+          <span class="text-xs font-semibold text-indigo-700 block mb-1">정답 횟수</span>
+          <span class="text-2xl font-black text-indigo-900" id="stat-correct">0</span>
+        </div>
+        <div class="bg-rose-50 border border-rose-100 p-4 rounded-2xl text-center">
+          <span class="text-xs font-semibold text-rose-700 block mb-1">오답 횟수</span>
+          <span class="text-2xl font-black text-rose-900" id="stat-incorrect">0</span>
+        </div>
+        <div class="bg-amber-50 border border-amber-100 p-4 rounded-2xl text-center">
+          <span class="text-xs font-semibold text-amber-700 block mb-1">전체 정확도</span>
+          <span class="text-2xl font-black text-amber-900" id="stat-accuracy">0%</span>
+        </div>
+      </div>
+
+      <!-- 집중 오답 노트 리스트 -->
+      <div class="border border-slate-100 rounded-2xl p-5 bg-slate-50/50">
+        <h3 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+          오답이 잦아 다음 세션에서 강조될 단어들
+        </h3>
+        <p class="text-xs text-slate-400 mb-4">해당 단어들은 완벽하게 암기할 때까지 문제 출제 가중치가 높게 유지됩니다.</p>
+        <div class="divide-y divide-slate-100 max-h-48 overflow-y-auto pr-2" id="weakness-list">
+          <!-- 자바스크립트로 동적 로딩 -->
+        </div>
+      </div>
+
+      <!-- 액션 버튼들 -->
+      <div class="flex gap-3">
+        <button onclick="restartSetup()" class="flex-grow bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2">
+          학습 설정으로 돌아가기
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 데이터 스토어 & 로직 구현 -->
+  <script>
+    // 87개의 영문 불규칙 동사 전체 원천 데이터 및 'pattern' 추가
+    // AAA: 원형=과거=과거분사, ABA: 원형=과거분사, ABB: 과거=과거분사, ABC: 모두 다름
+    const rawVerbs = [
+      { num: 1, root: 'hide', meaning: '숨다', past: 'hid', pp: 'hidden', pattern: 'ABC' },
+      { num: 2, root: 'sell', meaning: '팔다', past: 'sold', pp: 'sold', pattern: 'ABB' },
+      { num: 3, root: 'keep', meaning: '유지하다', past: 'kept', pp: 'kept', pattern: 'ABB' },
+      { num: 4, root: 'swim', meaning: '수영하다', past: 'swam', pp: 'swum', pattern: 'ABC' },
+      { num: 5, root: 'catch', meaning: '잡다', past: 'caught', pp: 'caught', pattern: 'ABB' },
+      { num: 6, root: 'mean', meaning: '의미하다', past: 'meant', pp: 'meant', pattern: 'ABB' },
+      { num: 7, root: 'sing', meaning: '노래하다', past: 'sang', pp: 'sung', pattern: 'ABC' },
+      { num: 8, root: 'lay', meaning: '놓다, 눕히다', past: 'laid', pp: 'laid', pattern: 'ABB' },
+      { num: 9, root: 'bite', meaning: '물다', past: 'bit', pp: 'bitten', pattern: 'ABC' },
+      { num: 10, root: 'bring', meaning: '가져오다', past: 'brought', pp: 'brought', pattern: 'ABB' },
+      { num: 11, root: 'run', meaning: '달리다', past: 'ran', pp: 'run', pattern: 'ABA' },
+      { num: 12, root: 'shut', meaning: '닫다', past: 'shut', pp: 'shut', pattern: 'AAA' },
+      { num: 13, root: 'spend', meaning: '소비하다', past: 'spent', pp: 'spent', pattern: 'ABB' },
+      { num: 14, root: 'shake', meaning: '흔들다', past: 'shook', pp: 'shaken', pattern: 'ABC' },
+      { num: 15, root: 'draw', meaning: '그리다', past: 'drew', pp: 'drawn', pattern: 'ABC' },
+      { num: 16, root: 'shine', meaning: '빛나다', past: 'shone', pp: 'shone', altPast: 'shined', altPp: 'shined', pattern: 'ABB' },
+      { num: 17, root: 'see', meaning: '보다', past: 'saw', pp: 'seen', pattern: 'ABC' },
+      { num: 18, root: 'wake', meaning: '잠이 깨다', past: 'woke', pp: 'woken', altPast: 'waked', altPp: 'waked', pattern: 'ABC' },
+      { num: 19, root: 'seek', meaning: '찾다', past: 'sought', pp: 'sought', pattern: 'ABB' },
+      { num: 20, root: 'choose', meaning: '고르다', past: 'chose', pp: 'chosen', pattern: 'ABC' },
+      { num: 21, root: 'speak', meaning: '말하다', past: 'spoke', pp: 'spoken', pattern: 'ABC' },
+      // 25번 ~ 45번
+      { num: 25, root: 'send', meaning: '보내다', past: 'sent', pp: 'sent', pattern: 'ABB' },
+      { num: 26, root: 'begin', meaning: '시작하다', past: 'began', pp: 'begun', pattern: 'ABC' },
+      { num: 27, root: 'put', meaning: '놓다', past: 'put', pp: 'put', pattern: 'AAA' },
+      { num: 28, root: 'meet', meaning: '만나다', past: 'met', pp: 'met', pattern: 'ABB' },
+      { num: 29, root: 'spill', meaning: '엎지르다', past: 'spilled', pp: 'spilled', altPast: 'spilt', altPp: 'spilt', pattern: 'ABB' },
+      { num: 30, root: 'ride', meaning: '타다', past: 'rode', pp: 'ridden', pattern: 'ABC' },
+      { num: 31, root: 'leave', meaning: '떠나다', past: 'left', pp: 'left', pattern: 'ABB' },
+      { num: 32, root: 'drink', meaning: '마시다', past: 'drank', pp: 'drunk', pattern: 'ABC' },
+      { num: 33, root: 'forgive', meaning: '용서하다', past: 'forgave', pp: 'forgiven', pattern: 'ABC' },
+      { num: 34, root: 'sweep', meaning: '청소하다', past: 'swept', pp: 'swept', pattern: 'ABB' },
+      { num: 35, root: 'hear', meaning: '듣다', past: 'heard', pp: 'heard', pattern: 'ABB' },
+      { num: 36, root: 'steal', meaning: '훔치다', past: 'stole', pp: 'stolen', pattern: 'ABC' },
+      { num: 37, root: 'show', meaning: '보여주다', past: 'showed', pp: 'shown', pattern: 'ABC' },
+      { num: 38, root: 'sleep', meaning: '잠자다', past: 'slept', pp: 'slept', pattern: 'ABB' },
+      { num: 39, root: 'fall', meaning: '떨어지다', past: 'fell', pp: 'fallen', pattern: 'ABC' },
+      { num: 40, root: 'become', meaning: '되다', past: 'became', pp: 'become', pattern: 'ABA' },
+      { num: 41, root: 'buy', meaning: '사다', past: 'bought', pp: 'bought', pattern: 'ABB' },
+      { num: 42, root: 'blow', meaning: '불다', past: 'blew', pp: 'blown', pattern: 'ABC' },
+      { num: 43, root: 'break', meaning: '깨뜨리다', past: 'broke', pp: 'broken', pattern: 'ABC' },
+      { num: 44, root: 'sit', meaning: '앉다', past: 'sat', pp: 'sat', pattern: 'ABB' },
+      { num: 45, root: 'get', meaning: '얻다', past: 'got', pp: 'got', altPp: 'gotten', pattern: 'ABB' },
+      // 49번 ~ 68번
+      { num: 49, root: 'feel', meaning: '느끼다', past: 'felt', pp: 'felt', pattern: 'ABB' },
+      { num: 50, root: 'cut', meaning: '베다', past: 'cut', pp: 'cut', pattern: 'AAA' },
+      { num: 51, root: 'drive', meaning: '운전하다', past: 'drove', pp: 'driven', pattern: 'ABC' },
+      { num: 52, root: 'forget', meaning: '잊다', past: 'forgot', pp: 'forgotten', altPp: 'forgot', pattern: 'ABC' },
+      { num: 53, root: 'stand', meaning: '서다, 서 있다', past: 'stood', pp: 'stood', pattern: 'ABB' },
+      { num: 54, root: 'wear', meaning: '입다', past: 'wore', pp: 'worn', pattern: 'ABC' },
+      { num: 55, root: 'pay', meaning: '지불하다', past: 'paid', pp: 'paid', pattern: 'ABB' },
+      { num: 56, root: 'hurt', meaning: '다치다', past: 'hurt', pp: 'hurt', pattern: 'AAA' },
+      { num: 57, root: 'tell', meaning: '말하다', past: 'told', pp: 'told', pattern: 'ABB' },
+      { num: 58, root: 'do', meaning: '하다', past: 'did', pp: 'done', pattern: 'ABC' },
+      { num: 59, root: 'shoot', meaning: '쏘다', past: 'shot', pp: 'shot', pattern: 'ABB' },
+      { num: 60, root: 'fight', meaning: '싸우다', past: 'fought', pp: 'fought', pattern: 'ABB' },
+      { num: 61, root: 'lead', meaning: '인도하다', past: 'led', pp: 'led', pattern: 'ABB' },
+      { num: 62, root: 'hit', meaning: '치다, 때리다', past: 'hit', pp: 'hit', pattern: 'AAA' },
+      { num: 63, root: 'give', meaning: '주다', past: 'gave', pp: 'given', pattern: 'ABC' },
+      { num: 64, root: 'say', meaning: '말하다', past: 'said', pp: 'said', pattern: 'ABB' },
+      { num: 65, root: 'throw', meaning: '던지다', past: 'threw', pp: 'thrown', pattern: 'ABC' },
+      { num: 66, root: 'come', meaning: '오다', past: 'came', pp: 'come', pattern: 'ABA' },
+      { num: 67, root: 'build', meaning: '짓다', past: 'built', pp: 'built', pattern: 'ABB' },
+      { num: 68, root: 'think', meaning: '생각하다', past: 'thought', pp: 'thought', pattern: 'ABB' },
+      // 69번 ~ 87번
+      { num: 69, root: 'have', meaning: '가지다', past: 'had', pp: 'had', pattern: 'ABB' },
+      { num: 70, root: 'hold', meaning: '잡다', past: 'held', pp: 'held', pattern: 'ABB' },
+      { num: 71, root: 'lend', meaning: '빌려주다', past: 'lent', pp: 'lent', pattern: 'ABB' },
+      { num: 72, root: 'lose', meaning: '잃다', past: 'lost', pp: 'lost', pattern: 'ABB' },
+      { num: 73, root: 'make', meaning: '만들다', past: 'made', pp: 'made', pattern: 'ABB' },
+      { num: 74, root: 'smell', meaning: '냄새 맡다', past: 'smelled', pp: 'smelled', altPast: 'smelt', altPp: 'smelt', pattern: 'ABB' },
+      { num: 75, root: 'teach', meaning: '가르치다', past: 'taught', pp: 'taught', pattern: 'ABB' },
+      { num: 76, root: 'be', meaning: '~이다, 있다', past: 'was', pp: 'been', secondPast: 'were', pattern: 'ABC' },
+      { num: 77, root: 'eat', meaning: '먹다', past: 'ate', pp: 'eaten', pattern: 'ABC' },
+      { num: 78, root: 'go', meaning: '가다', past: 'went', pp: 'gone', pattern: 'ABC' },
+      { num: 79, root: 'know', meaning: '알다', past: 'knew', pp: 'known', pattern: 'ABC' },
+      { num: 80, root: 'lie', meaning: '눕다', past: 'lay', pp: 'lain', pattern: 'ABC' },
+      { num: 81, root: 'ring', meaning: '울리다', past: 'rang', pp: 'rung', pattern: 'ABC' },
+      { num: 82, root: 'rise', meaning: '오르다', past: 'rose', pp: 'risen', pattern: 'ABC' },
+      { num: 83, root: 'take', meaning: '잡다', past: 'took', pp: 'taken', pattern: 'ABC' },
+      { num: 84, root: 'let', meaning: '~하게 하다', past: 'let', pp: 'let', pattern: 'AAA' },
+      { num: 85, root: 'set', meaning: '놓다', past: 'set', pp: 'set', pattern: 'AAA' },
+      { num: 86, root: 'learn', meaning: '배우다', past: 'learned', pp: 'learned', altPast: 'learnt', altPp: 'learnt', pattern: 'ABB' },
+      { num: 87, root: 'know', meaning: '알다 (중복)', past: 'knew', pp: 'known', pattern: 'ABC' }
+    ];
+
+    // 애플리케이션 상태
+    let selectedRange = 'all'; // 'all', 'AAA', 'ABA', 'ABB', 'ABC'
+    let selectedMode = 'choice'; // 'choice' or 'write'
+    let masterWeights = {}; // 각 동사별 오답 횟수 (가중치로 작동)
+    let currentPool = []; // 현재 세션에서 출제할 동사 목록
+    let currentQuestionIndex = 0;
+    let currentVerb = null;
+    let streakCount = 0;
+
+    // 세션 임시 결과 통계
+    let sessionCorrect = 0;
+    let sessionIncorrect = 0;
+    let roundIncorrectVerbs = []; // 이번 라운드에서 1번 이상 틀린 단어들
+
+    // 초기 카운트 계산 및 화면 업데이트
+    function updateSetupCounts() {
+      const counts = { all: rawVerbs.length, AAA: 0, ABA: 0, ABB: 0, ABC: 0 };
+      rawVerbs.forEach(v => {
+        if (counts[v.pattern] !== undefined) {
+          counts[v.pattern]++;
+        }
+      });
+
+      document.getElementById('count-all').innerText = counts.all;
+      document.getElementById('count-AAA').innerText = counts.AAA;
+      document.getElementById('count-ABA').innerText = counts.ABA;
+      document.getElementById('count-ABB').innerText = counts.ABB;
+      document.getElementById('count-ABC').innerText = counts.ABC;
+    }
+
+    // 로컬 스토리지에서 이전 오답 가중치 가져오기
+    function loadWeights() {
+      const saved = localStorage.getItem('v_master_weights');
+      if (saved) {
+        masterWeights = JSON.parse(saved);
+      } else {
+        rawVerbs.forEach(v => {
+          masterWeights[v.num] = 0; // 초기 오답점수는 0점
+        });
+      }
+      updateGlobalMasteryBadge();
+    }
+
+    // 가중치 로컬 스토리지에 세이브
+    function saveWeights() {
+      localStorage.setItem('v_master_weights', JSON.stringify(masterWeights));
+      updateGlobalMasteryBadge();
+    }
+
+    // 전반적인 학습율 마스터 뱃지 갱신
+    function updateGlobalMasteryBadge() {
+      let masteredCount = 0;
+      rawVerbs.forEach(v => {
+        if (!masterWeights[v.num] || masterWeights[v.num] === 0) {
+          masteredCount++;
+        }
+      });
+      const percent = Math.round((masteredCount / rawVerbs.length) * 100);
+      document.getElementById('mastery-percent').innerText = `${percent}%`;
+    }
+
+    // 세팅 모드 관련 UI 클릭 이벤트
+    function setRange(range) {
+      selectedRange = range;
+      document.querySelectorAll('.range-btn').forEach(btn => {
+        btn.classList.remove('border-indigo-600', 'text-indigo-700', 'shadow-sm');
+        btn.classList.add('border-slate-200', 'text-slate-600');
+      });
+      const activeBtn = document.getElementById(`btn-range-${range}`);
+      activeBtn.classList.remove('border-slate-200', 'text-slate-600');
+      activeBtn.classList.add('border-indigo-600', 'text-indigo-700', 'shadow-sm');
+
+      // 학습 요약 정보 업데이트
+      let patternName = '전체 패턴';
+      if (range === 'AAA') patternName = 'A-A-A 패턴 (원형=과거=과과분사)';
+      if (range === 'ABA') patternName = 'A-B-A 패턴 (원형=과거분사)';
+      if (range === 'ABB') patternName = 'A-B-B 패턴 (과거=과거분사)';
+      if (range === 'ABC') patternName = 'A-B-C 패턴 (모두 변화)';
+
+      const count = range === 'all' ? rawVerbs.length : rawVerbs.filter(v => v.pattern === range).length;
+
+      document.getElementById('summary-pattern').innerText = patternName;
+      document.getElementById('summary-count').innerText = `${count}개`;
+    }
+
+    function setMode(mode) {
+      selectedMode = mode;
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.remove('border-indigo-600', 'text-indigo-700', 'shadow-sm');
+        btn.classList.add('border-slate-200', 'text-slate-600');
+      });
+      const activeBtn = document.getElementById(`btn-mode-${mode}`);
+      activeBtn.classList.remove('border-slate-200', 'text-slate-600');
+      activeBtn.classList.add('border-indigo-600', 'text-indigo-700', 'shadow-sm');
+    }
+
+    // 퀴즈 시작 세션 가동
+    function startSession() {
+      // 1. 변화 형식(패턴)에 맞는 동사 필터링
+      let filtered = [];
+      if (selectedRange === 'all') {
+        filtered = [...rawVerbs];
+      } else {
+        filtered = rawVerbs.filter(v => v.pattern === selectedRange);
+      }
+
+      // 2. 가중치 학습 시스템
+      let weightedPool = [];
+      filtered.forEach(v => {
+        const weight = masterWeights[v.num] || 0;
+        // 기본 1번 포함 + 틀린 횟수(최대 3개 추가) 만큼 문제 풀에 사본 추가 출제 -> 오답 반복 유도
+        const iterations = 1 + Math.min(weight, 3);
+        for (let i = 0; i < iterations; i++) {
+          weightedPool.push({ ...v });
+        }
+      });
+
+      // 3. 랜덤 셔플
+      shuffleArray(weightedPool);
+
+      // 전체 단어 수가 학습 부담을 덜도록 세션당 최대 15개 추천 (가장 틀린단어 우선 포함)
+      currentPool = weightedPool.slice(0, 15);
+
+      // 초기 통계 초기화
+      currentQuestionIndex = 0;
+      sessionCorrect = 0;
+      sessionIncorrect = 0;
+      roundIncorrectVerbs = [];
+      streakCount = 0;
+
+      // 뷰 전환
+      document.getElementById('setup-view').classList.add('hidden');
+      document.getElementById('result-view').classList.add('hidden');
+      document.getElementById('quiz-view').classList.remove('hidden');
+
+      loadQuestion();
+    }
+
+    // 배열 셔플 헬퍼 함수
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // 퀴즈 문제 렌더링
+    function loadQuestion() {
+      // 인풋 피드백 초기화
+      document.getElementById('feedback-panel').classList.add('hidden');
+      document.getElementById('input-past').value = '';
+      document.getElementById('input-pp').value = '';
+      document.getElementById('input-past').disabled = false;
+      document.getElementById('input-pp').disabled = false;
+      document.getElementById('btn-submit-write').disabled = false;
+
+      // 진행률 업데이트
+      const total = currentPool.length;
+      document.getElementById('remaining-count').innerText = total - currentQuestionIndex;
+      const progressPercent = (currentQuestionIndex / total) * 100;
+      document.getElementById('progress-bar-fill').style.width = `${progressPercent}%`;
+
+      // 연속 정답 뱃지 갱신
+      const streakInfo = document.getElementById('streak-info');
+      if (streakCount >= 2) {
+        document.getElementById('streak-count').innerText = streakCount;
+        streakInfo.classList.remove('hidden');
+      } else {
+        streakInfo.classList.add('hidden');
+      }
+
+      if (currentQuestionIndex >= total) {
+        finishSession();
+        return;
+      }
+
+      currentVerb = currentPool[currentQuestionIndex];
+
+      // 가중치 반복 경고 배지 제어
+      const weightBadge = document.getElementById('repeat-badge');
+      if (masterWeights[currentVerb.num] > 0) {
+        weightBadge.classList.remove('hidden');
+      } else {
+        weightBadge.classList.add('hidden');
+      }
+
+      // 기본 정보 로드
+      document.getElementById('verb-number-label').innerText = `No. ${currentVerb.num}`;
+      
+      // 변화 패턴 이름 분기 매핑
+      let patternText = 'A-B-C형';
+      if (currentVerb.pattern === 'AAA') patternText = 'A-A-A형';
+      if (currentVerb.pattern === 'ABA') patternText = 'A-B-A형';
+      if (currentVerb.pattern === 'ABB') patternText = 'A-B-B형';
+      
+      document.getElementById('verb-pattern-label').innerText = patternText;
+      document.getElementById('verb-root').innerText = currentVerb.root;
+      document.getElementById('verb-meaning').innerText = `(${currentVerb.meaning})`;
+
+      // 모드에 맞춰 컴포넌트 렌더링
+      if (selectedMode === 'choice') {
+        document.getElementById('choices-container').classList.remove('hidden');
+        document.getElementById('write-container').classList.add('hidden');
+        generateChoiceOptions();
+      } else {
+        document.getElementById('choices-container').classList.add('hidden');
+        document.getElementById('write-container').classList.remove('hidden');
+        // 과거형 포커스
+        setTimeout(() => document.getElementById('input-past').focus(), 100);
+      }
+    }
+
+    // 객관식 선택지 생성 알고리즘
+    function generateChoiceOptions() {
+      const container = document.getElementById('choices-container');
+      container.innerHTML = '';
+
+      // 정답셋
+      const correctOption = `${currentVerb.past} - ${currentVerb.pp}`;
+      let options = [correctOption];
+
+      // 오답 만들기용 무작위 동사 풀에서 선택 (중복 제거)
+      let tempVerbs = rawVerbs.filter(v => v.num !== currentVerb.num);
+      shuffleArray(tempVerbs);
+
+      while (options.length < 4 && tempVerbs.length > 0) {
+        const dV = tempVerbs.pop();
+        const distractor = `${dV.past} - ${dV.pp}`;
+        if (!options.includes(distractor)) {
+          options.push(distractor);
+        }
+      }
+
+      // 오답이 모자란 특별한 상황 대비 더미 제조
+      if (options.length < 4) {
+        options.push(`${currentVerb.past}ed - ${currentVerb.past}ed`);
+        options.push(`${currentVerb.root}ing - ${currentVerb.past}`);
+        options.push(`${currentVerb.root}s - ${currentVerb.pp}`);
+      }
+
+      // 한 번 더 셔플
+      shuffleArray(options);
+
+      // 버튼 생성
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = "choice-option-btn py-4 px-5 bg-white border-2 border-slate-200 text-slate-800 text-lg font-bold rounded-2xl hover:border-indigo-400 hover:bg-slate-50 transition-all text-center focus:outline-none";
+        btn.innerText = opt;
+        btn.onclick = () => checkChoiceAnswer(opt, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    // 객관식 답안 체크
+    function checkChoiceAnswer(selectedValue, selectedButton) {
+      if (!document.getElementById('feedback-panel').classList.contains('hidden')) return;
+
+      const correctOption = `${currentVerb.past} - ${currentVerb.pp}`;
+      const isCorrect = (selectedValue === correctOption);
+
+      processResult(isCorrect, selectedButton);
+    }
+
+    // 주관식 답안 채점
+    function checkWriteAnswer() {
+      if (!document.getElementById('feedback-panel').classList.contains('hidden')) return;
+
+      const userPast = document.getElementById('input-past').value.trim().toLowerCase();
+      const userPP = document.getElementById('input-pp').value.trim().toLowerCase();
+
+      if (!userPast || !userPP) {
+        alert("과거형과 과거분사형 칸을 모두 입력해주세요!");
+        return;
+      }
+
+      const standardPast = currentVerb.past.toLowerCase();
+      const standardPP = currentVerb.pp.toLowerCase();
+      const altPast = currentVerb.altPast ? currentVerb.altPast.toLowerCase() : '';
+      const altPP = currentVerb.altPp ? currentVerb.altPp.toLowerCase() : '';
+      
+      const secPast = currentVerb.secondPast ? currentVerb.secondPast.toLowerCase() : '';
+
+      const isPastCorrect = (userPast === standardPast || (altPast && userPast === altPast) || (secPast && userPast === secPast));
+      const isPPCorrect = (userPP === standardPP || (altPP && userPP === altPP));
+
+      const isCorrect = isPastCorrect && isPPCorrect;
+
+      document.getElementById('input-past').disabled = true;
+      document.getElementById('input-pp').disabled = true;
+      document.getElementById('btn-submit-write').disabled = true;
+
+      processResult(isCorrect, null);
+    }
+
+    // 공통 채점 결과 핸들러
+    function processResult(isCorrect, targetElement) {
+      const panel = document.getElementById('feedback-panel');
+      const icon = document.getElementById('feedback-icon');
+      const title = document.getElementById('feedback-title');
+      const detail = document.getElementById('feedback-detail');
+
+      panel.classList.remove('hidden');
+
+      if (isCorrect) {
+        sessionCorrect++;
+        streakCount++;
+        
+        // 정답 시 가중치 경감 혜택
+        if (masterWeights[currentVerb.num] > 0) {
+          masterWeights[currentVerb.num] = Math.max(0, masterWeights[currentVerb.num] - 1);
+        }
+        
+        panel.className = "rounded-2xl p-4 flex items-start gap-3 border bg-emerald-50 border-emerald-100 text-emerald-800";
+        icon.innerText = "🏆";
+        title.innerText = "정답입니다!";
+        detail.innerText = `과거: ${currentVerb.past} / 과거분사: ${currentVerb.pp} 형태로 변합니다. 완벽해요!`;
+
+        if (targetElement) {
+          targetElement.className = "py-4 px-5 bg-emerald-500 border-2 border-emerald-500 text-white text-lg font-bold rounded-2xl text-center shadow-lg transition-all";
+        }
+      } else {
+        sessionIncorrect++;
+        streakCount = 0; 
+        
+        // 오답 시 중요 가중치 추가!
+        masterWeights[currentVerb.num] = (masterWeights[currentVerb.num] || 0) + 1;
+        
+        if (!roundIncorrectVerbs.some(v => v.num === currentVerb.num)) {
+          roundIncorrectVerbs.push(currentVerb);
+        }
+
+        panel.className = "rounded-2xl p-4 flex items-start gap-3 border bg-rose-50 border-rose-100 text-rose-800";
+        icon.innerText = "💡";
+        title.innerText = "아쉽습니다. 오답입니다!";
+        
+        let answerText = `정답은 "${currentVerb.past} - ${currentVerb.pp}" 입니다.`;
+        if (currentVerb.altPast) {
+          answerText += ` (허용 대안: ${currentVerb.altPast} - ${currentVerb.altPp})`;
+        }
+        detail.innerText = answerText;
+
+        if (targetElement) {
+          targetElement.className = "py-4 px-5 bg-rose-500 border-2 border-rose-500 text-white text-lg font-bold rounded-2xl text-center shadow-lg transition-all";
+        }
+
+        // 전체 객관식 옵션 중 정답 항목 표시해 주기
+        if (selectedMode === 'choice') {
+          const correctOptionStr = `${currentVerb.past} - ${currentVerb.pp}`;
+          document.querySelectorAll('.choice-option-btn').forEach(btn => {
+            if (btn.innerText === correctOptionStr) {
+              btn.className = "py-4 px-5 bg-emerald-50 border-2 border-emerald-400 text-emerald-700 text-lg font-bold rounded-2xl text-center transition-all";
+            }
+          });
+        }
+      }
+
+      saveWeights();
+    }
+
+    // 다음 단어로 진행
+    function loadNextQuestion() {
+      currentQuestionIndex++;
+      loadQuestion();
+    }
+
+    // 도중 탈출구
+    function exitQuiz() {
+      if (confirm("정말로 학습을 중단하고 메인으로 돌아가시겠습니까? 현재 진행 상황은 취소됩니다.")) {
+        restartSetup();
+      }
+    }
+
+    // 학습 종료 및 세션 분석 리포팅
+    function finishSession() {
+      document.getElementById('quiz-view').classList.add('hidden');
+      document.getElementById('result-view').classList.remove('hidden');
+
+      document.getElementById('stat-correct').innerText = sessionCorrect;
+      document.getElementById('stat-incorrect').innerText = sessionIncorrect;
+
+      const totalSolved = sessionCorrect + sessionIncorrect;
+      const accuracy = totalSolved > 0 ? Math.round((sessionCorrect / totalSolved) * 100) : 0;
+      document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
+
+      const weaknessContainer = document.getElementById('weakness-list');
+      weaknessContainer.innerHTML = '';
+
+      if (roundIncorrectVerbs.length === 0) {
+        weaknessContainer.innerHTML = `
+          <div class="text-center py-6 text-slate-400 text-sm">
+            🎯 완벽해요! 이번 라운드에서 틀린 단어가 하나도 없습니다.
+          </div>
+        `;
+      } else {
+        roundIncorrectVerbs.forEach(v => {
+          const item = document.createElement('div');
+          item.className = "py-3 flex justify-between items-center text-sm";
+          item.innerHTML = `
+            <div>
+              <span class="text-slate-400 mr-2">No.${v.num}</span>
+              <strong class="text-slate-900">${v.root}</strong>
+              <span class="text-slate-400 text-xs ml-1">(${v.meaning})</span>
+              <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold bg-indigo-50 text-indigo-600 rounded">${v.pattern}형</span>
+            </div>
+            <div class="font-semibold text-rose-600">
+              ${v.past} - ${v.pp}
+            </div>
+          `;
+          weaknessContainer.appendChild(item);
+        });
+      }
+    }
+
+    // 설정으로 돌아가서 다시 세팅
+    function restartSetup() {
+      document.getElementById('result-view').classList.add('hidden');
+      document.getElementById('quiz-view').classList.add('hidden');
+      document.getElementById('setup-view').classList.remove('hidden');
+    }
+
+    // 시작 시 세팅 실행
+    window.onload = function() {
+      loadWeights();
+      updateSetupCounts();
+    };
+  </script>
+</body>
+</html>
